@@ -1,12 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+/* ---------------- Variables ---------------- */
+:root {
+    --main-bg-color: #333;
+    --secondary-bg-color: bisque;
+    --border-color: #222;
+    --text-color: #333;
+    --highlight-color: #c22222;
+    --button-hover-color: rgb(226, 212, 193);
+    --button-active-color: rgb(221, 206, 185);
+    --font-family: Poppins, sans-serif;
+}
+
+/* Reset and Global Styles */
 *,
 *::after,
 *::before {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: Poppins, sans-serif;
+    font-family: var(--font-family);
 }
 
 li,
@@ -19,7 +32,52 @@ a {
     color: inherit;
 }
 
-/* ------------------------------------------------------------------------------------------------- */
+/* ---------------- Main Layout ---------------- */
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row; /* Располагаем элементы в одну строку */
+    justify-content: center; /* Пространство между роботами и текстом */
+    align-items: center; /* Выравниваем элементы по вертикали */
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    background-color: var(--main-bg-color);
+    padding: 0 2rem; /* Отступы по краям */
+}
+
+/* ---------------- Robot Styles ---------------- */
+.robot-1,
+.robot-2 {
+    display: flex;
+    flex-direction: column; /* Располагаем элементы робота вертикально */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex: 1; /* Равное пространство для каждого робота */
+    margin: 0 1rem; /* Отступы между роботами */
+}
+.robot-1 {
+    order: 0;
+}
+.robot-2 {
+    order: 2;
+}
+
+
+.robot-img {
+    width: 100%;
+    max-width: 18em; /* Не больше */
+    min-width: 12em; /* Не меньше */
+    border: var(--border-color) solid 5px;
+    padding: 20px;
+    background-color: var(--secondary-bg-color);
+    transition: transform 0.3s;
+}
+
+.robot-img:hover {
+    transform: scale(1.05); /* Увеличение при наведении */
+}
 
 .win-counter {
     display: flex;
@@ -27,49 +85,38 @@ a {
     align-items: center;
     justify-content: center;
     width: 6em;
-    border: #222 solid 5px;
+    border: var(--border-color) solid 5px;
     padding: 20px;
     margin: 15px;
-    background-color: bisque;
-    color: #333;
+    background-color: var(--secondary-bg-color);
+    color: var(--text-color);
     font-size: 2em;
     font-weight: 600;
 }
 
-.win-text, .win-number {
+.win-text,
+.win-number {
     display: inline-block;
-    width: 5em; /* или подбери опытным путём: 2em, 3em и т.д. */
-    text-align: center; /* чтобы число было по центру */
-}
-
-
-
-
-.robot-img {
-    width: 16em;
-    border: #222 solid 5px;
-    padding: 20px;
-    background-color: bisque;
-}
-
-.status-bar-img {
-    width: 2em;
+    width: 5em;
     text-align: center;
 }
 
-.main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
-    background-color: #333;
-}
-
+/* ---------------- Status Bar ---------------- */
 .status-bar {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
+    align-items: center;
     justify-content: space-evenly;
+    gap: 10px;
+    margin-top: 15px;
+    background-color: var(--secondary-bg-color);
+    padding: 10px 20px;
+    border: var(--border-color) solid 5px;
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: clamp(1em, 2.5vw, 2em); /* Адаптивный размер шрифта */
+    font-weight: 600;
 }
 
 .name, .health, .attack-power {
@@ -77,68 +124,50 @@ a {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background-color: bisque;
     padding: 16px;
-    margin: 0px 25px 30px;
-    border: #222 solid 5px;
     border-radius: 5px;
     color: #333;
-    font-size: 1.5em;
-    font-weight: 600;
-    width: 100%;
 }
 
-.robot-name ,.robot-health, .robot-attack-power {
+.name span, .health span, .attack-power span {
     display: inline-block;
-    width: 3em; /* или подбери опытным путём: 2em, 3em и т.д. */
-    text-align: center; /* чтобы число было по центру */
-}
-
-.robot-name {
-    width: 5em;
-}
-
-
-.robot-1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     text-align: center;
-    flex-grow: 1;
-    order: 1;
+    width: 3em;
 }
 
-.robot-2 {
+
+.robot-name,
+.robot-health,
+.robot-attack-power {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-grow: 1;
-    order: 3;
 }
 
+.status-bar-img {
+    width: 2em;
+    text-align: center;
+}
+
+/* ---------------- Text and Button Section ---------------- */
 .text {
     display: flex;
-    margin: 25px;
-    padding: 3em 5em;
-    border: #222 solid 5px;
-    border-radius: 5px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: bisque;
+    flex: 0.6; /* Меньше пространства, чем у роботов */
+    padding: 3em;
+    border: var(--border-color) solid 5px;
+    border-radius: 10px;
+    background-color: var(--secondary-bg-color);
     text-align: center;
-    order: 2;
     color: #800000;
+    margin: 0 2rem; /* Отступы от роботов */
 }
 
 .text .title {
-    font-size: 1.5em;
-    margin: 10px;
+    font-size: 2em;
+    margin: 10px 0;
     font-weight: 600;
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid var(--text-color);
 }
 
 .text .last-attack {
@@ -147,24 +176,69 @@ a {
     width: 15rem;
     font-size: 1.2em;
     font-weight: 600;
+    margin: 15px 0;
 }
 
 .text .fight-start {
     font-size: 1.3em;
     font-weight: 600;
-    margin-top: 10px;
-    color: #c22222;
+    margin-top: 20px;
+    color: var(--highlight-color);
     padding: 0.8em 2em;
     background-color: antiquewhite;
-    border: solid #333 2px;
+    border: solid var(--border-color) 2px;
     border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s, color 0.3s;
 }
 
 .text .fight-start:hover {
-    background-color: rgb(226, 212, 193);
+    background-color: var(--button-hover-color);
+    transform: scale(1.05);
 }
 
 .text .fight-start:active {
-    background-color: rgb(221, 206, 185);
+    background-color: var(--button-active-color);
     color: #e72626;
+    transform: scale(0.95);
+}
+
+/* ---------------- Media Queries ---------------- */
+@media (max-width: 768px) {
+    .main {
+        flex-direction: column; /* Ставим роботов и текст в колонку */
+        justify-content: center;
+    }
+
+    .robot-2 {
+        flex-direction: column-reverse;
+    }
+
+    .robot-img {
+        max-width: 35vw;
+    }
+
+    .text {
+        order: 1;
+        margin-top: 2rem;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .status-bar {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.5em;
+        width: 100%;
+    }
+
+    .text .fight-start {
+        font-size: 1em;
+        padding: 0.6em 1.5em;
+    }
+
+    .win-counter {
+        font-size: 1.5em;
+        width: auto;
+    }
 }
