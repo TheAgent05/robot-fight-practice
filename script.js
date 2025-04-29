@@ -102,6 +102,12 @@ function gameEnd(win, lose) {
 
     robotUI[lose].health.innerHTML = 0;
     lastHit.innerHTML = `<span style='color: ${winColor}'>${winName}</span> <span style='color: green'>VICTORY!</span>`;
+
+    let scores = JSON.parse(localStorage.getItem("scores")) || { Blue: 0, Red: 0 };
+    scores[winName]++;
+    localStorage.setItem("scores", JSON.stringify(scores));
+    console.log("Счёт обновлён:", scores);
+
     timer = setInterval(chill, 1000);
 }
 
@@ -172,3 +178,8 @@ function robotAttack(attacker, defender, attackerIndex, defenderIndex) {
     lastHit.innerHTML = `<span style='color: ${attackerColor};'>${attacker.name}</span> ударил <span style='color: ${defenderColor};'>${defender.name}</span> на <span style='color: #2A3759;'>${damage}</span> урона!`;
     $('.robot-img').eq(defenderIndex).effect('shake', { times: 3, distance: 5 }, 300);
 }
+
+window.onload = () => {
+    const scores = JSON.parse(localStorage.getItem("scores")) || { Blue: 0, Red: 0 };
+    console.log(`Blue: ${scores.Blue} побед, Red: ${scores.Red} побед`);
+};
