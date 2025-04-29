@@ -34,6 +34,8 @@ var robot2 = null;
 
 var lastHit = document.getElementsByClassName('last-attack')[0];
 var button = document.getElementsByClassName('fight-start')[0];
+var wins = document.getElementsByClassName('win-number');
+let scores = JSON.parse(localStorage.getItem("scores")) || { Blue: 0, Red: 0 };
 
 function createRobot(name) {
     const power = Math.floor(Math.random() * 16) + 5;
@@ -47,6 +49,12 @@ function updateRobotUI(index, robot) {
     robotUI[index].name.style.color = index === 0 ? 'blue' : 'red';
     robotUI[index].health.style.color = 'green';
     robotUI[index].power.style.color = 'red';
+}
+
+function updateWins() {
+    // Обновляем текст на странице для каждого робота
+    wins[0].innerHTML = scores.Blue; // Победы синего робота
+    wins[1].innerHTML = scores.Red;  // Победы красного робота
 }
 
 function roll(chance) {
@@ -100,17 +108,23 @@ function gameEnd(win, lose) {
     const winColor = win === 0 ? 'blue' : 'red';
     const winName = win === 0 ? robot1.name : robot2.name;
 
+    // Обновление счёта побед
+    if (win === 0) {
+        scores.Blue++;  // Увеличиваем победу синего
+    } else {
+        scores.Red++;   // Увеличиваем победу красного
+    }
+
+    // Сохраняем новые данные в LocalStorage
+    localStorage.setItem("scores", JSON.stringify(scores));
+
+    // Обновляем отображение побед на странице
+    updateWins();
+
     robotUI[lose].health.innerHTML = 0;
     lastHit.innerHTML = `<span style='color: ${winColor}'>${winName}</span> <span style='color: green'>VICTORY!</span>`;
-
-    let scores = JSON.parse(localStorage.getItem("scores")) || { Blue: 0, Red: 0 };
-    scores[winName]++;
-    localStorage.setItem("scores", JSON.stringify(scores));
-    console.log("Счёт обновлён:", scores);
-
     timer = setInterval(chill, 1000);
 }
-
 
 function chill() {
     if(timeout < fightCd) {
@@ -180,6 +194,5 @@ function robotAttack(attacker, defender, attackerIndex, defenderIndex) {
 }
 
 window.onload = () => {
-    const scores = JSON.parse(localStorage.getItem("scores")) || { Blue: 0, Red: 0 };
-    console.log(`Blue: ${scores.Blue} побед, Red: ${scores.Red} побед`);
+    updateWins();
 };
