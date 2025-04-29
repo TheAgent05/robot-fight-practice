@@ -94,6 +94,10 @@ a {
     text-align: center; /* чтобы число было по центру */
 }
 
+.robot-name {
+    width: 5em;
+}
+
 
 .robot-1 {
     display: flex;
