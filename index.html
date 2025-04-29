@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="source/styles/style.css">
+    <link rel="icon" href="source/images/logo.png" type="image/png">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <title>Kirill Fight</title>
+</head>
+<body>
+
+    <div class="main">
+        <div class="robot-1">
+            <div class="image-robot-1">
+                <img src="source/images/robot1.png" alt="" class="robot-img">
+            </div>
+            <div class="status-bar">
+                <div class="name">
+                    <span class="robot-name">null</span>
+                </div>
+                <div class="health">
+                    <img src="source/images/health.png" alt="" class="status-bar-img">
+                    <span class="robot-health">000</span>
+                </div>
+                <div class="attack-power">
+                    <img src="source/images/attack.png" alt="" class="status-bar-img">
+                    <span class="robot-attack-power">000</span>
+                </div>
+            </div>
+        </div>
+        <div class="robot-2">
+            <div class="image-robot-2">
+                <img src="source/images/robot2.png" alt="" class="robot-img">
+            </div>
+            <div class="status-bar">
+                <div class="name">
+                    <span class="robot-name">null</span>
+                </div>
+                <div class="health">
+                    <img src="source/images/health.png" alt="" class="status-bar-img">
+                    <span class="robot-health">000</span>
+                </div>
+                <div class="attack-power">
+                    <img src="source/images/attack.png" alt="" class="status-bar-img">
+                    <span class="robot-attack-power">000</span>
+                </div>
+            </div>
+        </div>
+        <div class="text">
+            <span class="title">Бой роботов!</span>
+            <span class="last-attack">Удачи в бою</span>
+            <button class="fight-start" onclick="fight()">FIGHT!</button>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
