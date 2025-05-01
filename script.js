@@ -139,11 +139,11 @@ function gameEnd(win, lose) {
     if (winDep === true && allInDep) {
         allInDep = false;
         depnul = false;
-        howManyDepnul = howManyDepnul * 4;
+        howManyDepnul = howManyDepnul * 2;
         money = howManyDepnul;
     } else if(winDep === true && depnul) {
         depnul = false;
-        howManyDepnul = howManyDepnul * 2;
+        howManyDepnul = Math.floor(howManyDepnul * 1.5);
         
         money += howManyDepnul
     } else {
