@@ -177,6 +177,8 @@ function chill() {
         clearInterval(timer);
         button.innerHTML = "FIGHT!";
         button.disabled = false;
+        robot1 = null;
+        robot2 = null;
     }
 }
 
