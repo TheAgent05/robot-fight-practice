@@ -4,6 +4,7 @@ class Robot {
         this.hp = hp;
         this.power = power;
         this.usedUlt = false;
+        this.deposit = false;
     }
 }
 
@@ -21,6 +22,24 @@ const robotUI = [
         img: document.getElementsByClassName('robot-img')[1]
     }
 ];
+
+const depUI = [
+    {
+        allIn: $('span.all-in').eq(0),
+        depInput: $('#dep-left-robot')
+    },
+    {
+        allIn: $('span.all-in').eq(1),
+        depInput: $('#dep-right-robot')
+    }
+];
+
+let depnul = false;
+let howManyDepnul = 0;
+let allInDep = false;
+let money = JSON.parse(localStorage.getItem("money")) || 100;
+let htmlMoney = $('.cash-div .cash');
+
 
 
 var started = false;
@@ -73,8 +92,8 @@ function randomizer(a, b) {
 
 
 function fight() {
-    if(!started) {
-        started = true
+    if(!started && robot1 === null && robot2 === null) {
+        
 
         robot1 = createRobot('Blue');
         robot2 = createRobot('Red');
@@ -86,8 +105,9 @@ function fight() {
         updateRobotUI(1, robot2);
 
     } else {
+        started = true
         randStart = Math.floor(Math.random() * 2) + 1;
-        if (randomizer(1, 2) === 1) {
+        if (randomizer(1, 1) === 1) {
             robotAttack(robot1, robot2, 0, 1);
         } else {
             robotAttack(robot2, robot1, 1, 0);
@@ -107,6 +127,7 @@ function gameEnd(win, lose) {
 
     const winColor = win === 0 ? 'blue' : 'red';
     const winName = win === 0 ? robot1.name : robot2.name;
+    const winDep = win === 0 ? robot1.deposit : robot2.deposit;
 
     // Обновление счёта побед
     if (win === 0) {
@@ -115,11 +136,32 @@ function gameEnd(win, lose) {
         scores.Red++;   // Увеличиваем победу красного
     }
 
+    if (winDep === true && allInDep) {
+        allInDep = false;
+        depnul = false;
+        howManyDepnul = howManyDepnul * 4;
+        money = howManyDepnul;
+    } else if(winDep === true && depnul) {
+        depnul = false;
+        howManyDepnul = howManyDepnul * 2;
+        
+        money += howManyDepnul
+    } else {
+        depnul = false;
+        howManyDepnul = 0;
+    }
+
+
+
     // Сохраняем новые данные в LocalStorage
     localStorage.setItem("scores", JSON.stringify(scores));
 
     // Обновляем отображение побед на странице
     updateWins();
+
+    localStorage.setItem("money", JSON.stringify(money));
+    htmlMoney.text(money);
+
 
     robotUI[lose].health.innerHTML = 0;
     lastHit.innerHTML = `<span style='color: ${winColor}'>${winName}</span> <span style='color: green'>VICTORY!</span>`;
@@ -181,7 +223,7 @@ function robotAttack(attacker, defender, attackerIndex, defenderIndex) {
         defender.hp -= damage;
         defenderHealthElem.innerHTML = defender.hp;
         lastHit.innerHTML = `<span style='color: ${attackerColor};'>${attacker.name}</span> кританул по <span style='color: ${defenderColor};'>${defender.name}</span> на <span style='color: rgb(174, 17, 236);'>${damage}</span> урона!`;
-        attackerImg.effect('shake', { times: 3, distance: 5 }, 300);
+        $('.robot-img').eq(defenderIndex).effect('shake', { times: 3, distance: 5 }, 300);
         return;
     }
 
@@ -195,4 +237,98 @@ function robotAttack(attacker, defender, attackerIndex, defenderIndex) {
 
 window.onload = () => {
     updateWins();
+    htmlMoney.text(money);
 };
+
+
+// -------------------------------------//
+//             ДЕПАТЬ ЙОУ               //
+// -------------------------------------//
+
+function toggleDep() {
+    document.querySelector('.deposit-div').classList.toggle('active');
+  }
+
+depUI[0].depInput.on('input', function() {
+    if ($(this).val() !== '' && !depnul && !started) {
+        depUI[0].allIn.text('Деп');
+        depUI[1].depInput.val('');
+        depUI[1].allIn.text('ALL IN!');
+        howManyDepnul = Number($(this).val());
+        console.log(howManyDepnul);
+    } else if(!depnul && !started) {
+        depUI[0].allIn.text('ALL IN!');
+        howManyDepnul = 0;
+        console.log(howManyDepnul);
+    }
+});
+
+depUI[1].depInput.on('input', function() {
+    if ($(this).val() !== '' && !depnul && !started) {
+        depUI[1].allIn.text('Деп');
+        depUI[0].depInput.val('');
+        depUI[0].allIn.text('ALL IN!');
+        howManyDepnul = Number($(this).val());
+        console.log(howManyDepnul);
+    } else if(!depnul && !started) {
+        depUI[1].allIn.text('ALL IN!');
+        howManyDepnul = 0;
+        console.log(howManyDepnul);
+    }
+});
+
+function clearDepUI(number) {
+    for (let index = number; index != 0; index--) {
+        let many = (index - 1)
+        depUI[many].depInput.prop('disabled', true);
+        depUI[many].depInput.val('');
+        depUI[many].allIn.text('ALL IN!');
+    }
+}
+
+
+depUI[0].allIn.on('click', function() {
+   if($(this).text() === "ALL IN!" && !depnul && money !== 0 && !allInDep && !started &&  robot1 !== null && robot2 !== null) {
+    allInDep = true;
+    depnul = true;
+    robot1.deposit = true;
+
+    howManyDepnul = money;
+    money - howManyDepnul
+    htmlMoney.text(money - howManyDepnul);
+
+    clearDepUI(2);
+    console.log("ALL IN!");
+   } else if(howManyDepnul <= money && !depnul && !started &&  robot1 !== null && robot2 !== null) {
+    depnul = true
+    robot1.deposit = true;
+    money - howManyDepnul
+    htmlMoney.text(money - howManyDepnul);
+
+    clearDepUI(2);
+    console.log("DEP");
+   }
+});
+
+depUI[1].allIn.on('click', function() {
+    if($(this).text() === "ALL IN!" && !depnul && money !== 0 && !allInDep && !started &&  robot1 !== null && robot2 !== null) {
+     allInDep = true;
+     depnul = true;
+     robot2.deposit = true;
+ 
+     howManyDepnul = money;
+     money - howManyDepnul
+     htmlMoney.text(money - howManyDepnul);
+ 
+     clearDepUI(2);
+     console.log("ALL IN!");
+    } else if(howManyDepnul <= money && !depnul && !started &&  robot1 !== null && robot2 !== null) {
+     depnul = true
+     robot2.deposit = true;
+     money - howManyDepnul
+     htmlMoney.text(money - howManyDepnul);
+ 
+     clearDepUI(2);
+     console.log("DEP");
+    }
+ });

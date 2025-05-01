@@ -164,7 +164,10 @@ a {
     padding: 3em;
     text-align: center;
     margin: 0 2rem;
+    min-width: 16em;
+    height: 100%;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .text {
@@ -223,8 +226,134 @@ a {
     transform: scale(0.95);
 }
 
+/* ---------------- депнуть жескаа & cash ---------------- */
+
+.cash-div {
+    display: inline-block;
+    min-width: 12rem;
+    padding: 1em;
+    border: var(--border-color) solid 5px;
+    border-radius: 10px;
+    background-color: var(--secondary-bg-color);
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #129212;
+    box-sizing: border-box;
+}
+
+.deposit-div {
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 1em;
+    margin: 25px 0;
+    background-color: var(--secondary-bg-color);
+    border: var(--border-color) solid  5px;
+    border-radius: 10px;
+    width: 60%;
+    height: auto;
+}
+
+.deposit-div .dep {
+    cursor: pointer;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--text-color);
+    border-radius: 15px;
+    z-index: 2;
+    position: relative;
+    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+    user-select: none;
+}
+
+.deposit-div .dep:hover {
+    background-color: #ffffff46;
+    transform: scale(1.05);
+}
+
+.deposit-div .robot-dep {
+    position: absolute;
+    top: 100%;
+    padding: 0.5em 1em;
+    background-color: var(--secondary-bg-color);
+    border: var(--border-color) solid 5px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.robot-dep.left {
+    left: -7rem;
+}
+
+.robot-dep.left .all-in {
+    cursor: pointer;
+    user-select: none;
+    color: blue;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+}
+
+.robot-dep.left .all-in:hover {
+    background-color: #ffffff46;
+    transform: scale(1.05);
+}
+
+.robot-dep #dep-left-robot {
+    background-color: var(--main-bg-color);
+    outline: none;
+    border: var(--border-color) solid 3px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.robot-dep.right {
+    right: -7rem;
+}
+
+.robot-dep.right .all-in {
+    cursor: pointer;
+    user-select: none;
+    color: red;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.3s, color 0.3s;
+}
+
+.robot-dep.right .all-in:hover {
+    background-color: #ffffff46;
+    transform: scale(1.05);
+}
+
+.robot-dep #dep-right-robot {
+    background-color: var(--main-bg-color);
+    outline: none;
+    border: var(--border-color) solid 3px;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.deposit-div.active .robot-dep {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
 /* ---------------- Media Queries ---------------- */
 @media (max-width: 768px) {
+    .cash-div, .deposit-div {
+        display: none;
+    }
+
     .middle {
         padding: 0;
         margin: 1em 0;

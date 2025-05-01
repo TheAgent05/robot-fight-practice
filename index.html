@@ -58,10 +58,25 @@
             </div>
         </div>
         <div class="middle">
+            <div class="cash-div">
+                <span class="cash">000</span>
+                <span class="cash-symb">$</span>
+            </div>
             <div class="text">
                 <span class="title">Бой роботов!</span>
                 <span class="last-attack">Удачи в бою</span>
                 <button class="fight-start" onclick="fight()">FIGHT!</button>
+            </div>
+            <div class="deposit-div">
+                <div class="robot-dep left">
+                    <span class="all-in">ALL IN!</span>
+                    <input type="number" name="money" id="dep-left-robot" min="0">
+                </div>
+                <span class="dep" onclick="toggleDep()">депнуть😏😏</span>
+                <div class="robot-dep right">
+                    <span class="all-in">ALL IN!</span>
+                    <input type="number" name="money" id="dep-right-robot" min="0">
+                </div>
             </div>
         </div>
     </div>
