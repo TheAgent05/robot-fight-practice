@@ -148,6 +148,7 @@ function gameEnd(win, lose) {
         money += howManyDepnul
     } else {
         depnul = false;
+        money -= howManyDepnul
         howManyDepnul = 0;
     }
 
@@ -173,6 +174,9 @@ function chill() {
     timeout++;
     button.innerHTML = timeout;
     } else{
+        depUI[0].depInput.prop('disabled', false);
+        depUI[1].depInput.prop('disabled', false);
+
         timeout = 0;
         clearInterval(timer);
         button.innerHTML = "FIGHT!";
