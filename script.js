@@ -107,7 +107,7 @@ function fight() {
     } else {
         started = true
         randStart = Math.floor(Math.random() * 2) + 1;
-        if (randomizer(1, 1) === 1) {
+        if (randomizer(1, 2) === 1) {
             robotAttack(robot1, robot2, 0, 1);
         } else {
             robotAttack(robot2, robot1, 1, 0);
