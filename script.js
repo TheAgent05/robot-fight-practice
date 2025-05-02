@@ -64,7 +64,6 @@ function createRobot(name) {
 function updateRobotUI(index, robot) {
     robotUI[index].name.innerHTML = robot.name;
     robotUI[index].health.innerHTML = robot.hp;
-    robotUI[index].power.innerHTML = robot.power;
     robotUI[index].name.style.color = index === 0 ? 'blue' : 'red';
     robotUI[index].health.style.color = 'green';
     robotUI[index].power.style.color = 'red';
@@ -106,6 +105,10 @@ function fight() {
 
     } else {
         started = true
+
+        $('.robot-attack-power').eq(0).text(robot1.power)
+        $('.robot-attack-power').eq(1).text(robot2.power)
+
         randStart = Math.floor(Math.random() * 2) + 1;
         if (randomizer(1, 2) === 1) {
             robotAttack(robot1, robot2, 0, 1);
@@ -124,6 +127,9 @@ function gameEnd(win, lose) {
     started = false;
     button.disabled = true;
     button.innerHTML = "0";
+
+    $('.robot-attack-power').eq(0).text('000')
+    $('.robot-attack-power').eq(1).text('000')
 
     const winColor = win === 0 ? 'blue' : 'red';
     const winName = win === 0 ? robot1.name : robot2.name;
